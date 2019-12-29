@@ -1,5 +1,8 @@
 name: 'AI QUE LOUCURA SENHOR'
 description: 'Wait a designated number of milliseconds'
-run: 
+runs: 
   using: 'node12'
   main: './dist/main.js'
+branding:
+  icon: 'award'  
+  color: 'green'
