@@ -15,15 +15,18 @@ jobs:
     - uses: actions/checkout@v1
     - name: Use Node.js 
       env:
-        repo-token: "${{ github.token }}"
+        repo-token: '${{ github.token }}'
         configuration-path: '.github/labeler.yml'
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - run: npm install
-      env:
-        CI: true
-        repo-token: "${{ github.token }}"
+        repo-token: '${{ github.token }}'
         configuration-path: '.github/labeler.yml'
+    - run: npm install
     - run: npm run build --if-present
     - run: node ./lib/repo.js
+      env:
+        CI: true
+        repo-token: '${{ github.token }}'
+        configuration-path: '.github/labeler.yml'
+    
