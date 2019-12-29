@@ -3,17 +3,7 @@ layout: cv
 title: Isaac Newtons's CV
 ---
 # Rodolfo Costa
-Physicist, Mathematician, Cambridge professor.
-
-<div id="webaddress">
-<a href="isaac@applesdofall.org">isaac@applesdofall.org</a>
-| <a href="http://en.wikipedia.org/wiki/Isaac_Newton">My wikipedia page</a>
-</div>
-
-
-## Currently
-
-Standing on the shoulders of giants
+Software Engineer, Web/UI Specialist
 
 ### Specialized in
 
@@ -81,7 +71,20 @@ __Royal Mint__, London
 
 `1600`
 __Lucasian professor of Mathematics__, Cambridge University
+- Translate designs to front-end code, estimate time and costs, and determine developer requirements and
+specifications.
+- Collaborate with creative and development teams on the execution of ideas and projects.
+- Promote and communicate new ideas, process improvements and new technologies to team members and
+leadership.
+- Write maintainable, scalable, responsive, and cross-browser code. Update and refactor existing code to improve
+site performance.
+- Utilized cutting edge JavaScript ES6, using React/Redux/Async/Promises/Generators/Flexbox/SASS etc., and
+advanced HTML5 techniques, like ServiceWorkers, Websockets and assets loading and caching.
+- Worked collaboratively in a cross-functional team to define and develop product roadmaps. Build and packaging
+tools (e.g. Grunt, Gulp or Webpack and Bower, NPM or Yarn), using Git and gitflow as our VCS.
 
+`2016-08 / 2017-04`
+__Full-Stack Software Engineer (Front-End Specialist)__, Guiabolso
 
 
 <!-- ### Footer
