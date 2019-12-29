@@ -1,5 +1,5 @@
 name: 'AI QUE LOUCURA SENHOR'
 description: 'Wait a designated number of milliseconds'
-
-using: 'node12'
-main: './dist/main.js'
+run: 
+  using: 'node12'
+  main: './dist/main.js'
