@@ -49,7 +49,11 @@ jobs:
       env:
         MATRIX_CONTEXT: ${{ toJson(env) }}
       run: echo "$MATRIX_CONTEXT"
-
+  
+  
+    - uses: actions/checkout@v2
+      with:
+        path: ./
     - uses: ./.github/actions/my-action
       with: 
         repo-token: '${{ github.token }}'
@@ -58,4 +62,4 @@ jobs:
         CI: true
         repo-token: '${{ github.token }}'
         configuration-path: '.github/labeler.yml'
-    
+
