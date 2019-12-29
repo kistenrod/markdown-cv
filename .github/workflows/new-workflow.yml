@@ -23,7 +23,7 @@ jobs:
         repo-token: '${{ github.token }}'
         configuration-path: '.github/labeler.yml'
     - run: npm install
-    - run: npm run build --if-present
+    - run: npm run pack
       
     - name: Dump GitHub context
       env:
