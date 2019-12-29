@@ -2,7 +2,7 @@ name: 'AI QUE LOUCURA SENHOR'
 description: 'Wait a designated number of milliseconds'
 runs: 
   using: 'node12'
-  main: '../../../lib/repo.js'
+  main: '../../../dist/index.js'
 branding:
   icon: 'award'  
   color: 'green'
