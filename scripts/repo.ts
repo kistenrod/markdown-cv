@@ -96,7 +96,14 @@ async function fetchContent(
     ref: github.context.sha
   });
 
-  return Buffer.from(response.data.content, "base64").toString();
+  if (response.data && "content" in response.data) {
+    return Buffer.from(response.data.content, "base64").toString();
+  } else {
+    core.debug("deu erro, porque response.data.context nao existe");
+    core.debug(JSON.stringify(response));
+
+    return "{}";
+  }
 }
 
 function getLabelGlobMapFromObject(configObject: any): Map<string, string[]> {
