@@ -1,0 +1,100 @@
+name: PHPUnit
+
+on: [push, pull_request]
+
+jobs:
+  phpunit:
+    name: PHPUnit
+    runs-on: self-hosted
+    env:
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      SESSION_DRIVER: redis
+      DB_CONNECTION: pgsql
+      DB_HOST: localhost
+      DB_PASSWORD: testing
+      DB_USERNAME: testing
+      DB_DATABASE: testing
+    services:
+      postgres:
+        image: postgres:11-alpine
+        env:
+          POSTGRES_USER: testing
+          POSTGRES_PASSWORD: testing
+          POSTGRES_DB: testing
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379/tcp
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: false
+      max-parallel: 15
+      matrix:
+       php-versions: ['7.4']
+       node: ['13']
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('package-lock.json') }}
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Run & generate assets
+        run: npm install && npm run production
+
+      - name: Setup PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@v1 # https://github.com/shivammathur/setup-php
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: intl, imagick, gd, redis, mbstring, pdo, pdo_pgsql #optional
+          ini-values: "post_max_size=256M, pcov.directory=app" #optional
+          coverage: none #optional can be either xdebug or pcov
+          pecl: false
+
+      - name: Creating the new env
+        run: php -r "file_exists('.env.testing') || copy('.env.example', '.env.testing');"
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+
+      - name: Generate the encryption key
+        run: php artisan key:generate --env testing
+
+      - name: Database migration
+        run: php artisan migrate --env testing -n
+        env:
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
+        env:
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+
+      - name: Upload artifacts on failure
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: Logs
+          path: ./storage/logs
