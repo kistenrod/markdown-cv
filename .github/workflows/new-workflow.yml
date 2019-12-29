@@ -50,7 +50,10 @@ jobs:
         MATRIX_CONTEXT: ${{ toJson(env) }}
       run: echo "$MATRIX_CONTEXT"
 
-    - run: node ./lib/repo.js
+    - uses: ./lib/repo.js
+      with: 
+        repo-token: '${{ github.token }}'
+        configuration-path: '.github/labeler.yml'
       env:
         CI: true
         repo-token: '${{ github.token }}'
