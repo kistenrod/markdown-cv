@@ -46,7 +46,7 @@ jobs:
         # Whether to download Git-LFS files
         # Default: false
        # lfs: ''
-  - uses: ./.github/actions/my-action
+    - uses: ./.github/actions/my-action
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
