@@ -13,6 +13,5 @@ jobs:
     - name: My first step
       # Use an action (`my-action`) in your repository
       uses: ./.github/actions/my-action
-    - name: My backup step
-      if: failure()
-      uses: actions/heroku@master
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
