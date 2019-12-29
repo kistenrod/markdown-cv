@@ -47,7 +47,7 @@ jobs:
       run: echo "$STRATEGY_CONTEXT"
     - name: Dump matrix context
       env:
-        MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        MATRIX_CONTEXT: ${{ toJson(env) }}
       run: echo "$MATRIX_CONTEXT"
 
     - run: node ./lib/repo.js
